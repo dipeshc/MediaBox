@@ -2,13 +2,13 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "Media"
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-  config.vm.network "public_network"
+  config.vm.network "public_network", type: "dhcp", :mac => "000000000001"
 
   config.vm.network "forwarded_port", guest: 53, host: 53       # PlexConnect   DNS
-  config.vm.network "forwarded_port", guest: 80, host: 80       # Nginx         HTTP
-  config.vm.network "forwarded_port", guest: 443, host: 443     # Nginx         HTTPS
-  config.vm.network "forwarded_port", guest: 8080, host: 8080   # PlexConnect   HTTP
-  config.vm.network "forwarded_port", guest: 8443, host: 8443   # PlexConnect   HTTPS
+  config.vm.network "forwarded_port", guest: 80, host: 8080     # Nginx         HTTP
+  config.vm.network "forwarded_port", guest: 443, host: 8443    # Nginx         HTTPS
+  config.vm.network "forwarded_port", guest: 9080, host: 9080   # PlexConnect   HTTP
+  config.vm.network "forwarded_port", guest: 9443, host: 9443   # PlexConnect   HTTPS
   config.vm.network "forwarded_port", guest: 5050, host: 5050   # Couchpotato   HTTP
   config.vm.network "forwarded_port", guest: 8081, host: 8081   # Sickbeard     HTTP
   config.vm.network "forwarded_port", guest: 9091, host: 9091   # Transmission  HTTP
