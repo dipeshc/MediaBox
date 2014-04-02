@@ -3,11 +3,16 @@ Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
   config.vm.network "public_network"
 
-  config.vm.network "forwarded_port", guest: 5050, host: 5050   # Couchpotato
-  config.vm.network "forwarded_port", guest: 8081, host: 8081   # Sickbeard
-  config.vm.network "forwarded_port", guest: 9091, host: 9091   # Transmission
-  config.vm.network "forwarded_port", guest: 32400, host: 32400 # Plex
-  config.vm.network "forwarded_port", guest: 51413, host: 51413 # Transmission
+  config.vm.network "forwarded_port", guest: 53, host: 53       # PlexConnect   DNS
+  config.vm.network "forwarded_port", guest: 80, host: 80       # Nginx         HTTP
+  config.vm.network "forwarded_port", guest: 443, host: 443     # Nginx         HTTPS
+  config.vm.network "forwarded_port", guest: 8080, host: 8080   # PlexConnect   HTTP
+  config.vm.network "forwarded_port", guest: 8443, host: 8443   # PlexConnect   HTTPS
+  config.vm.network "forwarded_port", guest: 5050, host: 5050   # Couchpotato   HTTP
+  config.vm.network "forwarded_port", guest: 8081, host: 8081   # Sickbeard     HTTP
+  config.vm.network "forwarded_port", guest: 9091, host: 9091   # Transmission  HTTP
+  config.vm.network "forwarded_port", guest: 32400, host: 32400 # Plex          HTTP
+  config.vm.network "forwarded_port", guest: 51413, host: 51413 # Transmission  Torrents
 
   config.vm.synced_folder ".", "/vagrant"
   config.vm.synced_folder "./downloads", "/media/downloads"
@@ -20,9 +25,13 @@ end
 $script = <<SCRIPT
 echo "deb http://plex.r.worldssl.net/PlexMediaServer/ubuntu-repo lucid main" > /etc/apt/sources.list.d/plexmediaserver.list
 apt-get update
-apt-get install -y curl git-core python-cheetah python-software-properties transmission-daemon
+apt-get install -y screen curl git-core python-cheetah python-software-properties transmission-daemon nginx
 apt-get install -y --force-yes plexmediaserver
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python
+
+service nginx stop
+ln -fs /vagrant/settings/nginx/nginx.conf /etc/nginx/nginx.conf
+service nginx start
 
 service transmission-daemon stop
 ln -fs /vagrant/settings/transmission/init.d /etc/init.d/transmission-daemon
@@ -40,4 +49,13 @@ ln -fs /opt/couchpotato/init/ubuntu /etc/init.d/couchpotato
 ln -fs /vagrant/settings/couchpotato/default /etc/default/couchpotato
 update-rc.d couchpotato defaults
 /etc/init.d/couchpotato start
+
+git clone https://github.com/iBaa/PlexConnect.git /opt/plexconnect
+cd /opt/plexconnect/assets/certificates
+openssl req -new -nodes -newkey rsa:2048 -out trailers.pem -keyout trailers.key -x509 -days 365 -subj "/C=US/CN=trailers.apple.com"
+openssl x509 -in trailers.pem -outform der -out trailers.cer && cat trailers.key >> trailers.pem
+ln -fs /vagrant/settings/plexconnect/init.d /etc/init.d/plexconnect
+ln -fs /vagrant/settings/plexconnect/Settings.cfg /opt/plexconnect/Settings.cfg
+update-rc.d plexconnect defaults
+/etc/init.d/plexconnect start
 SCRIPT
