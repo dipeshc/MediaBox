@@ -1,2 +1,0 @@
-SB_USER=root
-SB_OPTS=--config=/vagrant/sickbeard/config.ini
