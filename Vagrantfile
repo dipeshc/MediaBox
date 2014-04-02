@@ -1,4 +1,5 @@
 Vagrant.configure("2") do |config|
+  config.vm.hostname = "Media"
   config.vm.box = "precise64"
   config.vm.network "public_network"
 
