@@ -2,6 +2,7 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "Media"
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.network "private_network", ip: "10.0.0.150"  # private network required for NFS using Virtual Box
   config.vm.network "public_network", :mac => "000000000001", ip: "192.168.1.150"
 
   config.vm.provider "virtualbox" do |v|
@@ -13,10 +14,10 @@ Vagrant.configure("2") do |config|
     config.cache.scope = :box
   end
 
-  config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder ".", "/vagrant", type: "nfs" # nfs required for couchpotato to access data directory correctly
   config.vm.synced_folder "./downloads", "/media/downloads"
-  config.vm.synced_folder "/host/path/to/movies", "/media/movies"
-  config.vm.synced_folder "/host/path/to/tv", "/media/tv"
+  config.vm.synced_folder "/Volumes/Data/Media/Movies", "/media/movies"
+  config.vm.synced_folder "/Volumes/MyPassport/TV Shows", "/media/tv"
 
   config.vm.provision "shell", inline: $script
 end
