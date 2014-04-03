@@ -1,2 +1,3 @@
 CP_USER=root
+CP_DATA=/vagrant/data/couchpotato
 CP_OPTS=--config=/vagrant/settings/couchpotato/config.ini

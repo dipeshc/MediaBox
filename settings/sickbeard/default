@@ -1,2 +1,3 @@
 SB_USER=root
+SB_DATA=/vagrant/data/sickbeard
 SB_OPTS=--config=/vagrant/settings/sickbeard/config.ini
