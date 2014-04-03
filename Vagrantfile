@@ -2,7 +2,12 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "Media"
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-  config.vm.network "public_network", type: "dhcp", :mac => "000000000001"
+  config.vm.network "public_network", :mac => "000000000001", ip: "192.168.1.150"
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1536
+    v.cpus = 2
+  end
 
   config.vm.network "forwarded_port", guest: 53, host: 53       # PlexConnect   DNS
   config.vm.network "forwarded_port", guest: 80, host: 8080     # Nginx         HTTP
