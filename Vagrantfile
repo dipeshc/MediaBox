@@ -28,6 +28,10 @@ apt-get install -y screen curl git-core python-cheetah python-software-propertie
 apt-get install -y --force-yes plexmediaserver
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python
 
+service plexmediaserver stop
+ln -fs /vagrant/settings/plex/default /etc/default/plexmediaserver
+service plexmediaserver start
+
 service nginx stop
 ln -fs /vagrant/settings/nginx/nginx.conf /etc/nginx/nginx.conf
 service nginx start
