@@ -9,6 +9,10 @@ Vagrant.configure("2") do |config|
     v.cpus = 2
   end
 
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+
   config.vm.synced_folder ".", "/vagrant"
   config.vm.synced_folder "./downloads", "/media/downloads"
   config.vm.synced_folder "/host/path/to/movies", "/media/movies"
