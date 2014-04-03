@@ -55,13 +55,4 @@ ln -fs /opt/couchpotato/init/ubuntu /etc/init.d/couchpotato
 ln -fs /vagrant/settings/couchpotato/default /etc/default/couchpotato
 update-rc.d couchpotato defaults
 /etc/init.d/couchpotato start
-
-git clone https://github.com/iBaa/PlexConnect.git /opt/plexconnect
-cd /opt/plexconnect/assets/certificates
-openssl req -new -nodes -newkey rsa:2048 -out trailers.pem -keyout trailers.key -x509 -days 365 -subj "/C=US/CN=trailers.apple.com"
-openssl x509 -in trailers.pem -outform der -out trailers.cer && cat trailers.key >> trailers.pem
-ln -fs /vagrant/settings/plexconnect/init.d /etc/init.d/plexconnect
-ln -fs /vagrant/settings/plexconnect/Settings.cfg /opt/plexconnect/Settings.cfg
-update-rc.d plexconnect defaults
-/etc/init.d/plexconnect start
 SCRIPT
