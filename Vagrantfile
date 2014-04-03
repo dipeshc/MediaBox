@@ -9,17 +9,6 @@ Vagrant.configure("2") do |config|
     v.cpus = 2
   end
 
-  config.vm.network "forwarded_port", guest: 53, host: 53       # PlexConnect   DNS
-  config.vm.network "forwarded_port", guest: 80, host: 8080     # Nginx         HTTP
-  config.vm.network "forwarded_port", guest: 443, host: 8443    # Nginx         HTTPS
-  config.vm.network "forwarded_port", guest: 9080, host: 9080   # PlexConnect   HTTP
-  config.vm.network "forwarded_port", guest: 9443, host: 9443   # PlexConnect   HTTPS
-  config.vm.network "forwarded_port", guest: 5050, host: 5050   # Couchpotato   HTTP
-  config.vm.network "forwarded_port", guest: 8081, host: 8081   # Sickbeard     HTTP
-  config.vm.network "forwarded_port", guest: 9091, host: 9091   # Transmission  HTTP
-  config.vm.network "forwarded_port", guest: 32400, host: 32400 # Plex          HTTP
-  config.vm.network "forwarded_port", guest: 51413, host: 51413 # Transmission  Torrents
-
   config.vm.synced_folder ".", "/vagrant"
   config.vm.synced_folder "./downloads", "/media/downloads"
   config.vm.synced_folder "/host/path/to/movies", "/media/movies"
