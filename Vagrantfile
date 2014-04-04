@@ -38,8 +38,8 @@ ln -fs /vagrant/settings/nginx/nginx.conf /etc/nginx/nginx.conf
 service nginx start
 
 service transmission-daemon stop
-ln -fs /vagrant/settings/transmission/init.d /etc/init.d/transmission-daemon
-ln -fs /vagrant/settings/transmission/settings.json /etc/transmission-daemon/settings.json
+ln -fs /vagrant/settings/transmission/default /etc/default/transmission-daemon
+ln -fs /vagrant/settings/transmission/settings.json /vagrant/data/transmission
 service transmission-daemon start
 
 git clone git://github.com/junalmeida/Sick-Beard.git /opt/sickbeard -b torrent_1080_subtitles
