@@ -1,3 +1,6 @@
+MoviesDirectory = ENV['MoviesDirectory'] || "/path/to/movies"
+TVDirectory = ENV['TVDirectory'] || "/path/to/tv"
+
 Vagrant.configure("2") do |config|
   config.vm.hostname = "Media"
   config.vm.box = "precise64"
@@ -20,8 +23,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.synced_folder ".", "/vagrant", type: "nfs" # nfs required for couchpotato to access data directory correctly
   config.vm.synced_folder "./downloads", "/media/downloads"
-  config.vm.synced_folder "/Volumes/Data/Media/Movies", "/media/movies"
-  config.vm.synced_folder "/Volumes/MyPassport/TV Shows", "/media/tv"
+  config.vm.synced_folder MoviesDirectory, "/media/movies"
+  config.vm.synced_folder TVDirectory, "/media/tv"
 
   config.vm.provision "shell", inline: $script
 end
