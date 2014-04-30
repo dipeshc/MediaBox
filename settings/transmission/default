@@ -11,7 +11,7 @@ ENABLE_DAEMON=1
 CONFIG_DIR="/vagrant/data/transmission" 
 
 # Default options for daemon, see transmission-daemon(1) for more options
-OPTIONS="--config-dir $CONFIG_DIR"
+OPTIONS="--config-dir $CONFIG_DIR --logfile $CONFIG_DIR/transmission.log"
 
 # (optional) extra options to start-stop-daemon
 #START_STOP_OPTIONS="--iosched idle --nicelevel 10"
