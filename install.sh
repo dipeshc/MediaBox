@@ -9,6 +9,7 @@ apt-get install -y screen curl git-core python-cheetah python-software-propertie
 apt-get install -y nginx
 service nginx stop
 ln -fs /vagrant/settings/nginx/nginx.conf /etc/nginx/nginx.conf
+ln -fs /vagrant/settings/nginx/htpasswd /etc/nginx/.htpasswd
 service nginx start
 
 # Install plex
