@@ -1,8 +1,8 @@
 MoviesDirectory = ENV['MoviesDirectory'] || "/path/to/movies"
-TVDirectory = ENV['TVDirectory'] || "/path/to/tv"
+TVShowsDirectory = ENV['TVShowsDirectory'] || "/path/to/tvshows"
 
 Vagrant.configure("2") do |config|
-  config.vm.hostname = "Media"
+  config.vm.hostname = "MediaBox"
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", type: "nfs" # nfs required for couchpotato to access data directory correctly
   config.vm.synced_folder "./downloads", "/media/downloads"
   config.vm.synced_folder MoviesDirectory, "/media/movies"
-  config.vm.synced_folder TVDirectory, "/media/tv"
+  config.vm.synced_folder TVShowsDirectory, "/media/tvshows"
 
   config.vm.provision "shell", path: "install.sh"
 end
