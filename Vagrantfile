@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
   # to database for locking. This feature isn't supported by the default vbox share.
   config.vm.network "private_network", ip: "172.16.0.150"
 
-  # Setting a dummy MAC address so that DHCP server can be used assign a static IP.
+  # Setting a dummy MAC address so that the DHCP server can use it to assign a static IP.
   config.vm.network "public_network", :mac => "000000000001", bridge: NetworkAdapter, type: "dhcp"
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
