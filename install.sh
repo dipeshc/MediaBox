@@ -13,6 +13,8 @@ ln -fs /vagrant/settings/nginx/htpasswd /etc/nginx/.htpasswd
 service nginx start
 
 # Install plex
+mkdir -p "/vagrant/data/plex/Plex Media Server/"
+cp /vagrant/settings/plex/Preferences.xml "/vagrant/data/plex/Plex Media Server/Preferences.xml"
 PlexMediaServerPackage="$(find /vagrant -name "plexmediaserver_*.deb" 2>/dev/null | head -1)"
 if [ -z $PlexMediaServerPackage ]; then
     apt-get install -y --force-yes plexmediaserver
