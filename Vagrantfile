@@ -5,7 +5,7 @@ NetworkAdapter = ENV["NetworkAdapter"] || ""
 
 Vagrant.configure("2") do |config|
   config.vm.hostname = "MediaBox"
-  config.vm.box = "precise64"
+  config.vm.box = "trusty64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   # Creating private network for NFS share of /vargant directory. NFS is require by the plex meda server
