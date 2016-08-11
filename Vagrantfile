@@ -14,20 +14,22 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 32400, host: 32400
   config.vm.network "forwarded_port", guest: 51413, host: 51413
 
-  config.vm.synced_folder ".", "/vagrant"
-  config.vm.synced_folder "./downloads", "/media/downloads"
-  config.vm.synced_folder MoviesDirectory, "/media/movies"
-  config.vm.synced_folder TVShowsDirectory, "/media/tvshows"
+  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  config.vm.synced_folder "./downloads", "/media/downloads", type: "nfs"
+  config.vm.synced_folder MoviesDirectory, "/media/movies", type: "nfs"
+  config.vm.synced_folder TVShowsDirectory, "/media/tvshows", type: "nfs"
 
   config.vm.provision "shell", path: "install.sh"
 
   # VirtualBox specific config
   config.vm.provider "virtualbox" do |v, override|
+    v.memory = 1536
+    v.cpus = 2
+
     # VirtualBox requires a NFS share due to a lack of locking support in the basic share. Locking
     # is required by the Plex Media Service when writing to the database. VirtualBox NFS shares
     # require a private network.
     override.vm.network "private_network", ip: "172.16.0.150"
-    override.vm.synced_folder ".", "/vagrant", type: "nfs"
   end
 
   # Cache vagrant packages if vagrant-cachier plugin installed
